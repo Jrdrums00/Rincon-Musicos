@@ -1,0 +1,1548 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Johan — Rincón del Músico · Barranquilla</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink:    #0d0c0a;
+  --paper:  #f5f0e8;
+  --warm:   #ede8dc;
+  --gold:   #c8922a;
+  --gold2:  #e8a83a;
+  --rust:   #9c3d1e;
+  --text:   #1a1815;
+  --muted:  #6b6560;
+  --border: rgba(200,146,42,0.2);
+  --card:   #fff9f0;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--paper);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 300;
+  overflow-x: hidden;
+  cursor: none;
+}
+
+/* CUSTOM CURSOR */
+.cursor {
+  width: 10px; height: 10px;
+  background: var(--gold);
+  border-radius: 50%;
+  position: fixed;
+  top: 0; left: 0;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: transform 0.08s, width 0.2s, height 0.2s, background 0.2s;
+  mix-blend-mode: multiply;
+}
+.cursor-ring {
+  width: 36px; height: 36px;
+  border: 1.5px solid var(--gold);
+  border-radius: 50%;
+  position: fixed;
+  top: 0; left: 0;
+  pointer-events: none;
+  z-index: 9998;
+  transform: translate(-50%, -50%);
+  transition: transform 0.18s ease, width 0.2s, height 0.2s, opacity 0.2s;
+  opacity: 0.5;
+}
+body:hover .cursor { opacity: 1; }
+
+/* PROGRESS BAR */
+.progress {
+  position: fixed; top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--gold), var(--gold2));
+  transform-origin: left;
+  transform: scaleX(0);
+  z-index: 200;
+  transition: transform 0.1s linear;
+}
+
+/* ───────── NAV ───────── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.4rem 3.5rem;
+  mix-blend-mode: normal;
+}
+
+nav::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(245,240,232,0.88);
+  backdrop-filter: blur(14px);
+  z-index: -1;
+  border-bottom: 1px solid var(--border);
+}
+
+.nav-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.05rem;
+  font-style: italic;
+  color: var(--text);
+  text-decoration: none;
+  letter-spacing: 0.5px;
+}
+
+.nav-name em { color: var(--gold); font-style: normal; }
+
+.nav-links {
+  display: flex;
+  gap: 2.5rem;
+  list-style: none;
+}
+
+.nav-links a {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.nav-links a:hover { color: var(--gold); }
+
+.nav-cta {
+  background: var(--gold);
+  color: #fff !important;
+  padding: 0.55rem 1.4rem;
+  font-size: 0.68rem !important;
+  letter-spacing: 2px;
+  transition: background 0.2s !important;
+}
+
+.nav-cta:hover { background: var(--rust) !important; color: #fff !important; }
+
+/* ───────── HERO ───────── */
+#hero {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  position: relative;
+  overflow: hidden;
+  padding-top: 5rem;
+}
+
+.hero-bg-text {
+  position: absolute;
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(8rem, 20vw, 22rem);
+  font-weight: 900;
+  color: rgba(200,146,42,0.05);
+  letter-spacing: -4px;
+  line-height: 1;
+  top: 50%; left: -2%;
+  transform: translateY(-50%);
+  white-space: nowrap;
+  pointer-events: none;
+  user-select: none;
+}
+
+.hero-left {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 5rem 4rem 5rem 3.5rem;
+  position: relative;
+  z-index: 2;
+}
+
+.hero-eyebrow {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.68rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.hero-eyebrow::before {
+  content: '';
+  width: 28px; height: 1px;
+  background: var(--gold);
+}
+
+h1.hero-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(3.2rem, 6vw, 5.5rem);
+  font-weight: 900;
+  line-height: 1.02;
+  color: var(--text);
+  margin-bottom: 1rem;
+  letter-spacing: -1px;
+}
+
+h1.hero-title .ital {
+  font-style: italic;
+  color: var(--gold);
+}
+
+.hero-role {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.75rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 2rem;
+  padding-left: 2px;
+}
+
+.hero-desc {
+  max-width: 400px;
+  line-height: 1.85;
+  color: var(--muted);
+  font-size: 0.95rem;
+  margin-bottom: 2.5rem;
+  border-left: 2px solid var(--border);
+  padding-left: 1.25rem;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.btn-main {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: var(--ink);
+  color: var(--paper);
+  font-family: 'DM Mono', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 1rem 2rem;
+  text-decoration: none;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.btn-main:hover { background: var(--gold); transform: translateY(-2px); }
+
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--text);
+  font-family: 'DM Mono', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-bottom: 1px solid currentColor;
+  padding-bottom: 2px;
+  transition: color 0.2s;
+}
+
+.btn-ghost:hover { color: var(--gold); }
+
+/* HERO RIGHT — photo placeholder */
+.hero-right {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  overflow: hidden;
+  padding: 3rem 0;
+}
+
+.photo-frame {
+  position: relative;
+  width: 380px;
+  height: 520px;
+  flex-shrink: 0;
+}
+
+.photo-placeholder {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(160deg, #e8dcc8 0%, #d4c4a0 60%, #c4a870 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.photo-placeholder::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-linear-gradient(45deg, rgba(200,146,42,0.06) 0px, rgba(200,146,42,0.06) 1px, transparent 1px, transparent 12px);
+}
+
+.photo-placeholder .drum-icon {
+  font-size: 5rem;
+  position: relative;
+  z-index: 1;
+  filter: drop-shadow(0 8px 20px rgba(0,0,0,0.15));
+  animation: sway 3s ease-in-out infinite;
+}
+
+@keyframes sway {
+  0%, 100% { transform: rotate(-3deg); }
+  50% { transform: rotate(3deg); }
+}
+
+.photo-placeholder p {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.62rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--rust);
+  position: relative;
+  z-index: 1;
+  opacity: 0.7;
+}
+
+.photo-frame::before {
+  content: '';
+  position: absolute;
+  top: 16px; left: 16px; right: -16px; bottom: -16px;
+  border: 1.5px solid var(--gold);
+  z-index: -1;
+}
+
+.photo-tag {
+  position: absolute;
+  bottom: -1.5rem;
+  left: -1.5rem;
+  background: var(--ink);
+  color: var(--paper);
+  padding: 1.25rem 1.5rem;
+  z-index: 2;
+}
+
+.photo-tag .tag-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  font-weight: 900;
+  color: var(--gold2);
+  line-height: 1;
+}
+
+.photo-tag .tag-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(245,240,232,0.5);
+  margin-top: 0.2rem;
+}
+
+/* Floating badge */
+.hero-badge {
+  position: absolute;
+  top: 6rem;
+  right: 2rem;
+  width: 110px; height: 110px;
+  background: var(--gold);
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 1rem;
+  animation: spin-slow 20s linear infinite;
+}
+
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.hero-badge span {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.55rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #fff;
+  line-height: 1.5;
+  animation: spin-slow 20s linear infinite reverse;
+}
+
+/* ───────── SECTION BASE ───────── */
+section { padding: 6rem 3.5rem; }
+
+.s-tag {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.s-tag::before { content: '◆'; font-size: 0.4rem; }
+
+h2.s-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  font-weight: 900;
+  line-height: 1.05;
+  letter-spacing: -0.5px;
+  margin-bottom: 0.75rem;
+}
+
+h2.s-title em { font-style: italic; color: var(--gold); }
+
+.s-rule {
+  width: 48px; height: 2px;
+  background: var(--gold);
+  margin-bottom: 2.5rem;
+}
+
+/* ───────── WHAT I DO (intro strip) ───────── */
+#intro {
+  background: var(--ink);
+  padding: 4rem 3.5rem;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 5rem;
+  align-items: center;
+}
+
+#intro h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.8rem, 3vw, 2.8rem);
+  font-weight: 900;
+  color: var(--paper);
+  line-height: 1.1;
+  font-style: italic;
+}
+
+#intro h2 em { color: var(--gold2); font-style: normal; }
+
+.intro-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.pill {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: 1px solid rgba(245,240,232,0.15);
+  padding: 0.65rem 1.2rem;
+  font-size: 0.8rem;
+  color: rgba(245,240,232,0.7);
+  transition: all 0.2s;
+  cursor: default;
+}
+
+.pill:hover {
+  border-color: var(--gold2);
+  color: var(--gold2);
+}
+
+.pill .pill-icon { font-size: 1rem; }
+
+/* ───────── SERVICES ───────── */
+#servicios { background: var(--paper); }
+
+.services-header {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: end;
+  margin-bottom: 4rem;
+}
+
+.services-header p {
+  color: var(--muted);
+  line-height: 1.8;
+  font-size: 0.92rem;
+  align-self: end;
+  padding-bottom: 0.75rem;
+}
+
+/* Service cards */
+.services-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  background: var(--border);
+}
+
+.svc {
+  background: var(--card);
+  display: grid;
+  grid-template-columns: 80px 1fr auto;
+  align-items: center;
+  gap: 0;
+  transition: background 0.25s;
+  cursor: default;
+  overflow: hidden;
+}
+
+.svc:hover { background: var(--warm); }
+
+.svc-index {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+  background: rgba(200,146,42,0.06);
+  border-right: 1px solid var(--border);
+  font-family: 'Playfair Display', serif;
+  font-size: 1.4rem;
+  font-weight: 900;
+  color: rgba(200,146,42,0.3);
+  font-style: italic;
+}
+
+.svc-body {
+  padding: 2rem 2.5rem;
+}
+
+.svc-icon { font-size: 1.5rem; margin-bottom: 0.5rem; display: block; }
+
+.svc-body h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-bottom: 0.35rem;
+  color: var(--text);
+}
+
+.svc-body p {
+  font-size: 0.86rem;
+  color: var(--muted);
+  line-height: 1.7;
+  max-width: 540px;
+}
+
+.svc-body .tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.75rem;
+}
+
+.stag {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--gold);
+  background: rgba(200,146,42,0.08);
+  padding: 0.25rem 0.65rem;
+  border: 1px solid rgba(200,146,42,0.2);
+}
+
+.svc-arrow {
+  padding: 2rem 2rem 2rem 0;
+  font-size: 1.2rem;
+  color: var(--border);
+  transition: color 0.2s, transform 0.2s;
+}
+
+.svc:hover .svc-arrow { color: var(--gold); transform: translateX(4px); }
+
+/* ───────── CLASES (featured) ───────── */
+#clases {
+  background: var(--warm);
+  border-top: 1px solid var(--border);
+}
+
+.clases-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+
+.clases-visual {
+  position: relative;
+}
+
+.levels-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  background: var(--border);
+}
+
+.level-row {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  background: var(--card);
+  transition: background 0.2s;
+  cursor: default;
+}
+
+.level-row:hover { background: #fff; }
+
+.level-bar-wrap {
+  flex: 1;
+  height: 56px;
+  position: relative;
+  overflow: hidden;
+}
+
+.level-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, rgba(200,146,42,0.15), rgba(200,146,42,0.04));
+  transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+  width: 0%;
+}
+
+.level-label {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  padding: 0 1.5rem;
+  gap: 1rem;
+}
+
+.level-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text);
+  min-width: 120px;
+}
+
+.level-desc {
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+.level-pct {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.65rem;
+  color: var(--gold);
+  padding: 0 1.5rem;
+  flex-shrink: 0;
+}
+
+.clases-content { padding-left: 1rem; }
+
+.clases-content p {
+  color: var(--muted);
+  line-height: 1.85;
+  font-size: 0.92rem;
+  margin-bottom: 1.5rem;
+}
+
+.includes {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  margin-bottom: 2rem;
+}
+
+.includes li {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.88rem;
+  color: var(--text);
+}
+
+.includes li::before {
+  content: '✓';
+  color: var(--gold);
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+/* ───────── TÉCNICO ───────── */
+#tecnico {
+  background: var(--ink);
+  position: relative;
+  overflow: hidden;
+}
+
+#tecnico::before {
+  content: 'TÉCNICO';
+  position: absolute;
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(6rem, 16vw, 18rem);
+  font-weight: 900;
+  font-style: italic;
+  color: rgba(245,240,232,0.025);
+  bottom: -2rem; right: -1rem;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+.tecnico-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5rem;
+  align-items: start;
+  position: relative;
+  z-index: 1;
+}
+
+.tecnico-inner .s-tag { color: var(--gold2); }
+.tecnico-inner .s-tag::before { color: var(--gold2); }
+.tecnico-inner h2 { color: var(--paper); }
+.tecnico-inner .s-rule { background: var(--gold2); }
+
+.tecnico-inner p {
+  color: rgba(245,240,232,0.5);
+  line-height: 1.85;
+  font-size: 0.92rem;
+  margin-bottom: 2rem;
+}
+
+.repairs-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: rgba(245,240,232,0.08);
+}
+
+.repair-item {
+  background: rgba(245,240,232,0.03);
+  padding: 1.5rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  transition: background 0.2s;
+  cursor: default;
+}
+
+.repair-item:hover { background: rgba(200,146,42,0.1); }
+
+.repair-icon {
+  width: 36px; height: 36px;
+  background: rgba(200,146,42,0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
+.repair-item h4 {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--paper);
+  margin-bottom: 0.2rem;
+}
+
+.repair-item p {
+  font-size: 0.75rem;
+  color: rgba(245,240,232,0.4) !important;
+  line-height: 1.5;
+  margin: 0 !important;
+}
+
+/* ───────── MARCAS ───────── */
+#marcas {
+  background: var(--paper);
+  border-top: 1px solid var(--border);
+}
+
+.marcas-scroll {
+  overflow: hidden;
+  margin-top: 2.5rem;
+  padding: 0.5rem 0;
+  mask-image: linear-gradient(90deg, transparent, black 10%, black 90%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, black 10%, black 90%, transparent);
+}
+
+.marcas-track {
+  display: flex;
+  gap: 0;
+  animation: scroll-brands 30s linear infinite;
+  width: max-content;
+}
+
+.marcas-track:hover { animation-play-state: paused; }
+
+@keyframes scroll-brands {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+.brand-chip {
+  display: flex;
+  align-items: center;
+  padding: 1rem 2.5rem;
+  border-right: 1px solid var(--border);
+  white-space: nowrap;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--muted);
+  transition: color 0.2s;
+  cursor: default;
+  flex-shrink: 0;
+}
+
+.brand-chip:hover { color: var(--gold); }
+
+/* ───────── SONIDO / ALQUILER split ───────── */
+#extras {
+  background: var(--warm);
+  border-top: 1px solid var(--border);
+}
+
+.extras-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--border);
+  margin-top: 1rem;
+}
+
+.extra-card {
+  background: var(--card);
+  padding: 3rem 2.5rem;
+  position: relative;
+  overflow: hidden;
+  transition: background 0.2s;
+  cursor: default;
+}
+
+.extra-card:hover { background: #fff; }
+
+.extra-card::before {
+  content: attr(data-num);
+  font-family: 'Playfair Display', serif;
+  font-size: 7rem;
+  font-weight: 900;
+  font-style: italic;
+  color: rgba(200,146,42,0.06);
+  position: absolute;
+  bottom: -1rem; right: 1rem;
+  line-height: 1;
+  pointer-events: none;
+}
+
+.extra-card .big-icon { font-size: 2.5rem; margin-bottom: 1.25rem; display: block; }
+
+.extra-card h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.extra-card .sub {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 1.25rem;
+}
+
+.extra-card p, .extra-card ul {
+  font-size: 0.86rem;
+  color: var(--muted);
+  line-height: 1.75;
+}
+
+.extra-card ul { list-style: none; }
+
+.extra-card ul li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  margin-bottom: 0.35rem;
+}
+
+.extra-card ul li::before {
+  content: '—';
+  color: var(--gold);
+  flex-shrink: 0;
+  font-size: 0.75rem;
+  margin-top: 0.15rem;
+}
+
+/* ───────── CONTACT ───────── */
+#contacto {
+  background: var(--ink);
+  position: relative;
+  overflow: hidden;
+}
+
+#contacto::after {
+  content: '🥁';
+  font-size: 22rem;
+  position: absolute;
+  right: -3rem;
+  bottom: -4rem;
+  opacity: 0.04;
+  pointer-events: none;
+  line-height: 1;
+}
+
+.contact-inner {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 6rem;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+}
+
+.contact-heading {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.5rem, 5vw, 5rem);
+  font-weight: 900;
+  line-height: 1;
+  color: var(--paper);
+  margin-bottom: 1.5rem;
+}
+
+.contact-heading em { font-style: italic; color: var(--gold2); }
+
+.contact-sub {
+  color: rgba(245,240,232,0.45);
+  font-size: 0.92rem;
+  line-height: 1.8;
+  max-width: 400px;
+  margin-bottom: 2.5rem;
+}
+
+.contact-links {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.clink {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  text-decoration: none;
+  group: true;
+}
+
+.clink-icon {
+  width: 44px; height: 44px;
+  background: rgba(200,146,42,0.12);
+  border: 1px solid rgba(200,146,42,0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  flex-shrink: 0;
+  transition: background 0.2s;
+}
+
+.clink:hover .clink-icon { background: var(--gold); }
+
+.clink-text small {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(245,240,232,0.3);
+  display: block;
+}
+
+.clink-text span {
+  font-size: 0.9rem;
+  color: var(--paper);
+  transition: color 0.2s;
+}
+
+.clink:hover .clink-text span { color: var(--gold2); }
+
+.wa-big {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: #25D366;
+  color: #fff;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.75rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 1.1rem 2.25rem;
+  text-decoration: none;
+  margin-top: 2rem;
+  transition: background 0.2s, transform 0.2s;
+  width: fit-content;
+}
+
+.wa-big:hover { background: #128C7E; transform: translateY(-2px); }
+
+/* ───────── FOOTER ───────── */
+footer {
+  background: #080807;
+  border-top: 1px solid rgba(200,146,42,0.1);
+  padding: 2rem 3.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+footer .f-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 0.95rem;
+  font-style: italic;
+  color: rgba(245,240,232,0.4);
+}
+
+footer .f-name em { color: var(--gold); font-style: normal; }
+
+footer p {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 2px;
+  color: rgba(245,240,232,0.2);
+  text-transform: uppercase;
+}
+
+/* ───────── REVEAL ───────── */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.65s ease, transform 0.65s ease;
+}
+
+.reveal.up { transform: translateY(28px); }
+.reveal.left { transform: translateX(-28px); }
+.reveal.right { transform: translateX(28px); }
+.reveal.visible { opacity: 1; transform: none; }
+
+/* ───────── RESPONSIVE ───────── */
+@media (max-width: 900px) {
+  nav { padding: 1rem 1.5rem; }
+  .nav-links { display: none; }
+  section { padding: 4rem 1.5rem; }
+  #hero { grid-template-columns: 1fr; padding-top: 5rem; }
+  .hero-left { padding: 3rem 1.5rem 2rem; }
+  .hero-right { height: 340px; }
+  .photo-frame { width: 260px; height: 340px; }
+  .hero-badge { width: 80px; height: 80px; top: 4rem; right: 1rem; }
+  #intro { grid-template-columns: 1fr; gap: 2rem; }
+  .services-header { grid-template-columns: 1fr; gap: 1rem; }
+  .svc { grid-template-columns: 60px 1fr 40px; }
+  .clases-grid { grid-template-columns: 1fr; }
+  .tecnico-inner { grid-template-columns: 1fr; gap: 2rem; }
+  .extras-grid { grid-template-columns: 1fr; }
+  .contact-inner { grid-template-columns: 1fr; gap: 3rem; }
+  footer { flex-direction: column; gap: 0.75rem; text-align: center; }
+}
+</style>
+</head>
+<body>
+
+<!-- Cursor -->
+<div class="cursor" id="cur"></div>
+<div class="cursor-ring" id="ring"></div>
+<div class="progress" id="prog"></div>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-name" href="#hero">Johan · <em>Rincón del Músico</em></a>
+  <ul class="nav-links">
+    <li><a href="#servicios">Servicios</a></li>
+    <li><a href="#clases">Clases</a></li>
+    <li><a href="#marcas">Marcas</a></li>
+    <li><a href="#contacto" class="nav-cta">Contáctame</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg-text">🥁</div>
+
+  <div class="hero-left">
+    <p class="hero-eyebrow reveal">Barranquilla, Colombia</p>
+
+    <h1 class="hero-title reveal">
+      Músico,<br>
+      <em>Instructor</em><br>
+      & Experto<br>
+      en Sonido.
+    </h1>
+
+    <p class="hero-role reveal">Baterista · Vendedor de instrumentos · Técnico</p>
+
+    <p class="hero-desc reveal">
+      Llevo años dedicado a la música y a ayudar a otros músicos. Aquí encuentras todo lo que necesitas: instrumentos, clases, servicio técnico, sonido profesional y más — con asesoría personalizada de alguien que vive la música de verdad.
+    </p>
+
+    <div class="hero-actions reveal">
+      <a href="#servicios" class="btn-main">Ver qué ofrezco ↓</a>
+      <a href="https://wa.me/573214641529" class="btn-ghost" target="_blank">WhatsApp directo →</a>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="photo-frame reveal right">
+      <div class="photo-placeholder">
+        <span class="drum-icon">🥁</span>
+        <p>Tu foto aquí</p>
+      </div>
+      <div class="photo-tag">
+        <div class="tag-num">+6</div>
+        <div class="tag-label">Servicios disponibles</div>
+      </div>
+    </div>
+    <div class="hero-badge">
+      <span>Barranquilla · Colombia · Músico Profesional ·</span>
+    </div>
+  </div>
+</section>
+
+<!-- INTRO STRIP -->
+<div id="intro">
+  <h2 class="reveal left">Lo que hago <em>hoy</em> por ti</h2>
+  <div class="intro-pills reveal">
+    <div class="pill"><span class="pill-icon">🥁</span> Clases de batería</div>
+    <div class="pill"><span class="pill-icon">🛍</span> Venta de instrumentos</div>
+    <div class="pill"><span class="pill-icon">🔧</span> Servicio técnico</div>
+    <div class="pill"><span class="pill-icon">🔊</span> Sonido profesional</div>
+    <div class="pill"><span class="pill-icon">🎤</span> Masterclasses</div>
+    <div class="pill"><span class="pill-icon">🥁</span> Alquiler de baterías</div>
+  </div>
+</div>
+
+<!-- SERVICIOS -->
+<section id="servicios">
+  <div class="services-header">
+    <div class="reveal">
+      <p class="s-tag">Portafolio</p>
+      <h2 class="s-title">Todo lo que<br><em>ofrezco</em></h2>
+      <div class="s-rule"></div>
+    </div>
+    <p class="reveal">Cada servicio viene con mi asesoría personal. No eres un número — te acompaño desde el primer contacto hasta que estés satisfecho con el resultado.</p>
+  </div>
+
+  <div class="services-list">
+
+    <div class="svc reveal">
+      <div class="svc-index">01</div>
+      <div class="svc-body">
+        <span class="svc-icon">🛍</span>
+        <h3>Venta de Instrumentos y Accesorios</h3>
+        <p>Baterías acústicas y electrónicas, platillos, pianos digitales, bajos, guitarras, percusión menor y accesorios especializados. Te ayudo a elegir lo correcto para tu nivel y presupuesto.</p>
+        <div class="tags">
+          <span class="stag">Asesoría personalizada</span>
+          <span class="stag">Orientación por nivel</span>
+          <span class="stag">Post-venta</span>
+        </div>
+      </div>
+      <div class="svc-arrow">→</div>
+    </div>
+
+    <div class="svc reveal">
+      <div class="svc-index">02</div>
+      <div class="svc-body">
+        <span class="svc-icon">🔊</span>
+        <h3>Sonido Profesional en Vivo</h3>
+        <p>Consolas análogas y digitales, sistemas de PA, micrófonos, monitores, interfaces y sistemas inalámbricos. Ideal para iglesias, eventos y producciones musicales.</p>
+        <div class="tags">
+          <span class="stag">Diseño de sistema</span>
+          <span class="stag">Optimización acústica</span>
+          <span class="stag">Configuración</span>
+        </div>
+      </div>
+      <div class="svc-arrow">→</div>
+    </div>
+
+    <div class="svc reveal">
+      <div class="svc-index">03</div>
+      <div class="svc-body">
+        <span class="svc-icon">🎤</span>
+        <h3>Masterclass de Batería</h3>
+        <p>Sesiones formativas intensivas para iglesias, academias e instituciones. Técnica avanzada, afinación profesional, construcción de sonido moderno y setup de escenario.</p>
+        <div class="tags">
+          <span class="stag">Grupal o individual</span>
+          <span class="stag">Sonido en vivo</span>
+          <span class="stag">Setup profesional</span>
+        </div>
+      </div>
+      <div class="svc-arrow">→</div>
+    </div>
+
+    <div class="svc reveal">
+      <div class="svc-index">04</div>
+      <div class="svc-body">
+        <span class="svc-icon">🎼</span>
+        <h3>Masterclass de Ensamble Musical</h3>
+        <p>Para bandas completas. Trabajamos escucha activa, dinámicas, comunicación en tarima y construcción de repertorio. Ideal para ministerios y bandas que quieren sonar mejor juntos.</p>
+        <div class="tags">
+          <span class="stag">Bandas completas</span>
+          <span class="stag">Dinámicas</span>
+          <span class="stag">Tarima</span>
+        </div>
+      </div>
+      <div class="svc-arrow">→</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CLASES — featured -->
+<section id="clases">
+  <div class="clases-grid">
+    <div class="clases-visual reveal left">
+      <p class="s-tag">Formación</p>
+      <h2 class="s-title" style="margin-bottom:1.5rem;">Clases de<br><em>Batería</em></h2>
+      <div class="levels-stack">
+        <div class="level-row">
+          <div class="level-bar-wrap">
+            <div class="level-bar-fill" data-pct="30"></div>
+            <div class="level-label">
+              <span class="level-name">Básico</span>
+              <span class="level-desc">Primeros pasos, técnica y ritmo base</span>
+            </div>
+          </div>
+          <span class="level-pct">Lv.1</span>
+        </div>
+        <div class="level-row">
+          <div class="level-bar-wrap">
+            <div class="level-bar-fill" data-pct="55"></div>
+            <div class="level-label">
+              <span class="level-name">Intermedio</span>
+              <span class="level-desc">Grooves, independencia, lectura rítmica</span>
+            </div>
+          </div>
+          <span class="level-pct">Lv.2</span>
+        </div>
+        <div class="level-row">
+          <div class="level-bar-wrap">
+            <div class="level-bar-fill" data-pct="78"></div>
+            <div class="level-label">
+              <span class="level-name">Avanzado</span>
+              <span class="level-desc">Improvisación, estilos, ensamble</span>
+            </div>
+          </div>
+          <span class="level-pct">Lv.3</span>
+        </div>
+        <div class="level-row">
+          <div class="level-bar-wrap">
+            <div class="level-bar-fill" data-pct="100"></div>
+            <div class="level-label">
+              <span class="level-name">Semi-Pro</span>
+              <span class="level-desc">Preparación real para escenario</span>
+            </div>
+          </div>
+          <span class="level-pct">Lv.4</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="clases-content reveal right">
+      <p class="s-tag">Presencial & Virtual</p>
+      <div class="s-rule"></div>
+      <p>Las clases son personalizadas según tu nivel, estilo y objetivos. No enseño con un método genérico — adapto cada sesión a lo que tú necesitas para avanzar de verdad.</p>
+      <p>Trabajo técnica de manos y pies, independencia, lectura rítmica, grooves contemporáneos e improvisación. Si quieres tocar en vivo, te preparo para eso.</p>
+      <ul class="includes">
+        <li>Material didáctico incluido</li>
+        <li>Evaluación por objetivos claros</li>
+        <li>Seguimiento personalizado</li>
+        <li>Modalidad presencial y virtual</li>
+        <li>Preparación para escenario</li>
+      </ul>
+      <a href="https://wa.me/573214641529?text=Hola,%20quiero%20info%20sobre%20las%20clases%20de%20bater%C3%ADa" class="btn-main" target="_blank">Quiero una clase →</a>
+    </div>
+  </div>
+</section>
+
+<!-- TÉCNICO -->
+<section id="tecnico">
+  <div class="tecnico-inner">
+    <div>
+      <p class="s-tag reveal">Especialidad</p>
+      <h2 class="s-title reveal">Servicio<br>Técnico<br><em>en Batería</em></h2>
+      <div class="s-rule reveal"></div>
+      <p class="reveal">Si tu batería no suena como debería, yo me encargo. Años de experiencia en mantenimiento y restauración de instrumentos de percusión.</p>
+      <a href="https://wa.me/573214641529?text=Hola,%20necesito%20servicio%20t%C3%A9cnico%20para%20mi%20bater%C3%ADa" class="btn-main reveal" target="_blank" style="background:var(--gold2); color:#0d0c0a;">Pedir servicio →</a>
+    </div>
+    <div class="repairs-grid reveal">
+      <div class="repair-item">
+        <div class="repair-icon">🪘</div>
+        <div>
+          <h4>Cambio de parches</h4>
+          <p>Selección y montaje profesional</p>
+        </div>
+      </div>
+      <div class="repair-item">
+        <div class="repair-icon">🧹</div>
+        <div>
+          <h4>Limpieza profunda</h4>
+          <p>Interior y exterior del kit</p>
+        </div>
+      </div>
+      <div class="repair-item">
+        <div class="repair-icon">🔩</div>
+        <div>
+          <h4>Ajuste de herrajes</h4>
+          <p>Tensores, soportes y armazones</p>
+        </div>
+      </div>
+      <div class="repair-item">
+        <div class="repair-icon">🛠</div>
+        <div>
+          <h4>Restauración básica</h4>
+          <p>Recuperación de piezas y acabados</p>
+        </div>
+      </div>
+      <div class="repair-item">
+        <div class="repair-icon">⚙️</div>
+        <div>
+          <h4>Calibración de pedales</h4>
+          <p>Resortes, batidores y velocidad</p>
+        </div>
+      </div>
+      <div class="repair-item">
+        <div class="repair-icon">🎵</div>
+        <div>
+          <h4>Afinación profesional</h4>
+          <p>Cada casco al tono ideal</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXTRAS: Sonido & Alquiler -->
+<section id="extras">
+  <div class="reveal">
+    <p class="s-tag">Más servicios</p>
+    <h2 class="s-title">También<br><em>tengo esto</em></h2>
+    <div class="s-rule"></div>
+  </div>
+  <div class="extras-grid">
+    <div class="extra-card reveal" data-num="🔊">
+      <span class="big-icon">🔊</span>
+      <h3>Sonido Profesional</h3>
+      <p class="sub">Para iglesias y eventos</p>
+      <p>Te ayudo a armar tu sistema de audio o consigo los equipos que necesitas: consolas, PA, micrófonos, monitores, sistemas inalámbricos y más.</p>
+      <ul style="margin-top:1rem;">
+        <li>Asesoría en configuración</li>
+        <li>Diseño básico de sistema</li>
+        <li>Optimización acústica</li>
+        <li>Recomendaciones para espacios</li>
+      </ul>
+    </div>
+    <div class="extra-card reveal" data-num="🥁">
+      <span class="big-icon">🥁</span>
+      <h3>Alquiler de Baterías</h3>
+      <p class="sub">Eventos · Iglesias · Grabaciones</p>
+      <p>¿Necesitas una batería para un evento, concierto o grabación? Te la llevo afinada y lista para tocar.</p>
+      <ul style="margin-top:1rem;">
+        <li>Batería completa con herrajes</li>
+        <li>Afinación profesional incluida</li>
+        <li>Revisión técnica previa</li>
+        <li>Disponible en Barranquilla</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- MARCAS -->
+<section id="marcas">
+  <div class="reveal">
+    <p class="s-tag">Catálogo</p>
+    <h2 class="s-title">Marcas que<br><em>manejo</em></h2>
+    <div class="s-rule"></div>
+    <p style="color:var(--muted); font-size:0.9rem; max-width:500px; line-height:1.8;">Trabajo con las mejores marcas del mercado. Si buscas algo específico, escríbeme — te consigo lo que necesitas.</p>
+  </div>
+  <div class="marcas-scroll">
+    <div class="marcas-track" id="marcasTrack">
+      <!-- duplicated for infinite scroll -->
+      <span class="brand-chip">Fender</span>
+      <span class="brand-chip">Ludwig</span>
+      <span class="brand-chip">Zildjian</span>
+      <span class="brand-chip">Sabian</span>
+      <span class="brand-chip">Shure</span>
+      <span class="brand-chip">Electro Voice</span>
+      <span class="brand-chip">Vic Firth</span>
+      <span class="brand-chip">Remo</span>
+      <span class="brand-chip">Evans</span>
+      <span class="brand-chip">D'Addario</span>
+      <span class="brand-chip">Ernie Ball</span>
+      <span class="brand-chip">Casio</span>
+      <span class="brand-chip">Honner</span>
+      <span class="brand-chip">Promark</span>
+      <span class="brand-chip">Haram</span>
+      <span class="brand-chip">KZ</span>
+      <span class="brand-chip">Isabella</span>
+      <span class="brand-chip">Quiklok</span>
+      <!-- duplicate -->
+      <span class="brand-chip">Fender</span>
+      <span class="brand-chip">Ludwig</span>
+      <span class="brand-chip">Zildjian</span>
+      <span class="brand-chip">Sabian</span>
+      <span class="brand-chip">Shure</span>
+      <span class="brand-chip">Electro Voice</span>
+      <span class="brand-chip">Vic Firth</span>
+      <span class="brand-chip">Remo</span>
+      <span class="brand-chip">Evans</span>
+      <span class="brand-chip">D'Addario</span>
+      <span class="brand-chip">Ernie Ball</span>
+      <span class="brand-chip">Casio</span>
+      <span class="brand-chip">Honner</span>
+      <span class="brand-chip">Promark</span>
+      <span class="brand-chip">Haram</span>
+      <span class="brand-chip">KZ</span>
+      <span class="brand-chip">Isabella</span>
+      <span class="brand-chip">Quiklok</span>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACTO -->
+<section id="contacto">
+  <div class="contact-inner">
+    <div class="reveal">
+      <p class="contact-heading">¿Hablamos<br>sobre tu<br><em>proyecto?</em></p>
+      <p class="contact-sub">Escríbeme directamente — sin formularios, sin esperas. Te respondo rápido y te asesoro de verdad.</p>
+      <a class="wa-big" href="https://wa.me/573214641529?text=Hola%20Johan,%20vi%20tu%20página%20y%20quiero%20más%20info" target="_blank">
+        💬 Escribir por WhatsApp
+      </a>
+    </div>
+    <div class="contact-links reveal right">
+      <a class="clink" href="https://wa.me/573214641529" target="_blank">
+        <div class="clink-icon">📱</div>
+        <div class="clink-text">
+          <small>WhatsApp / Teléfono</small>
+          <span>321 464 1529</span>
+        </div>
+      </a>
+      <a class="clink" href="mailto:rinconjohan82@gmail.com">
+        <div class="clink-icon">✉️</div>
+        <div class="clink-text">
+          <small>Correo electrónico</small>
+          <span>rinconjohan82@gmail.com</span>
+        </div>
+      </a>
+      <div class="clink" style="cursor:default;">
+        <div class="clink-icon">📍</div>
+        <div class="clink-text">
+          <small>Ciudad</small>
+          <span>Barranquilla, Colombia</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="f-name">Johan · <em>Rincón del Músico</em></div>
+  <p>Barranquilla · Colombia · 2025</p>
+  <p>Soluciones Musicales Integrales</p>
+</footer>
+
+<script>
+// ── CURSOR ──
+const cur = document.getElementById('cur');
+const ring = document.getElementById('ring');
+let mx = 0, my = 0, rx = 0, ry = 0;
+
+document.addEventListener('mousemove', e => {
+  mx = e.clientX; my = e.clientY;
+  cur.style.left = mx + 'px';
+  cur.style.top = my + 'px';
+});
+
+function animRing() {
+  rx += (mx - rx) * 0.12;
+  ry += (my - ry) * 0.12;
+  ring.style.left = rx + 'px';
+  ring.style.top = ry + 'px';
+  requestAnimationFrame(animRing);
+}
+animRing();
+
+document.querySelectorAll('a, button, .svc, .extra-card, .repair-item, .brand-chip, .pill').forEach(el => {
+  el.addEventListener('mouseenter', () => {
+    cur.style.width = '20px';
+    cur.style.height = '20px';
+    ring.style.width = '56px';
+    ring.style.height = '56px';
+  });
+  el.addEventListener('mouseleave', () => {
+    cur.style.width = '10px';
+    cur.style.height = '10px';
+    ring.style.width = '36px';
+    ring.style.height = '36px';
+  });
+});
+
+// ── SCROLL PROGRESS ──
+const prog = document.getElementById('prog');
+window.addEventListener('scroll', () => {
+  const pct = window.scrollY / (document.body.scrollHeight - window.innerHeight);
+  prog.style.transform = `scaleX(${pct})`;
+});
+
+// ── REVEAL ──
+const obs = new IntersectionObserver(entries => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('visible'), e.target.dataset.delay || 0);
+      obs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.reveal').forEach((el, i) => {
+  // stagger siblings
+  const siblings = el.parentElement.querySelectorAll('.reveal');
+  const idx = Array.from(siblings).indexOf(el);
+  el.dataset.delay = idx * 60;
+  obs.observe(el);
+});
+
+// ── LEVEL BARS ──
+const barObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      const bars = e.target.querySelectorAll('.level-bar-fill');
+      bars.forEach((bar, i) => {
+        setTimeout(() => {
+          bar.style.width = bar.dataset.pct + '%';
+        }, i * 180);
+      });
+      barObs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.3 });
+
+const levelStack = document.querySelector('.levels-stack');
+if (levelStack) barObs.observe(levelStack);
+</script>
+</body>
+</html>
