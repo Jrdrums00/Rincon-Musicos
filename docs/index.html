@@ -1740,6 +1740,17 @@ document.querySelectorAll('.service-card, .valor-item, .pilar, .gallery-item').f
   el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
   observer.observe(el);
 });
+
+// Formulario → WhatsApp
+document.querySelector('.contact-form form').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const name    = document.getElementById('name').value.trim();
+  const phone   = document.getElementById('phone').value.trim();
+  const message = document.getElementById('message').value.trim();
+
+  const text = `Hola! Te escribo desde el sitio web.\n\n*Nombre:* ${name}${phone ? '\n*Teléfono:* ' + phone : ''}\n\n*Mensaje:*\n${message}`;
+  window.open('https://wa.me/573214641529?text=' + encodeURIComponent(text), '_blank');
+});
 </script>
 </body>
 </html>
